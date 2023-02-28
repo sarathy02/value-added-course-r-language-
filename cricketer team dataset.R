@@ -1,0 +1,16 @@
+install.packages("remotes")
+install.packages("PKS")
+library(rvest)
+library(dplyr)
+link <-'https://www.icc-cricket.com/rankings/mens/player-rankings/t20i/batting'
+# allowability
+web <-read_html(link)
+cricketer_name <- web %>% html_nodes (".name a , .rankings-block__banner--name-large") %>% html_text()
+View(cricketer_name)
+cricket_team<- web %>% html_nodes (".table-body__logo-text , .rankings-block__banner--nationality") %>% html_text()
+View(circket_team)
+ratings <- web %>% html_nodes (".rating , .rankings-block__banner--rating") %>% html_text()
+View(ratings)
+mens_batting_rate <- data.frame(cricketer_name, cricket_team, ratings)
+View(mens_batting_rate)
+write.csv(mens_batting_rate, 'cricket team dataset.csv')
